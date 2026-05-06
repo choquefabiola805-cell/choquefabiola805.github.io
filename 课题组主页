@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>胡静涵 | 华中师范大学心理学院</title>
+<style>
+  :root {
+    --primary: #1a365d;
+    --primary-light: #2c5282;
+    --primary-lighter: #3182ce;
+    --accent: #4299e1;
+    --accent-light: #bee3f8;
+    --bg: #f7fafc;
+    --bg-white: #ffffff;
+    --text: #2d3748;
+    --text-light: #4a5568;
+    --text-muted: #718096;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.05);
+    --radius: 8px;
+    --transition: 0.2s ease;
+    --max-width: 1100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  a { color: var(--primary-lighter); text-decoration: none; transition: var(--transition); }
+  a:hover { color: var(--primary); }
+
+  /* ===== Navigation ===== */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(26, 54, 93, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 0 20px;
+  }
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand {
+    font-size: 17px; font-weight: 600; color: #fff; letter-spacing: 0.5px;
+  }
+  .nav-links {
+    display: flex; list-style: none; gap: 2px;
+  }
+  .nav-links a {
+    display: block; padding: 8px 14px;
+    color: rgba(255,255,255,0.85); font-size: 14px; border-radius: 6px;
+    transition: var(--transition);
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; transition: 0.3s; }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      position: absolute; top: 56px; left: 0; right: 0;
+      background: var(--primary); flex-direction: column;
+      padding: 8px 16px 16px; gap: 0;
+      border-bottom: 3px solid var(--accent);
+    }
+    .nav-links.active { display: flex; }
+    .nav-links a { padding: 10px 12px; }
+    .nav-toggle { display: block; }
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    margin-top: 56px;
+    background: linear-gradient(135deg, var(--primary) 0%, #1a4a7a 40%, #1e5a8e 100%);
+    color: #fff; padding: 60px 20px 50px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; top: -50%; right: -10%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; bottom: -30%; left: 5%; width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: flex; align-items: center; gap: 40px;
+    position: relative; z-index: 1;
+  }
+  .hero-avatar {
+    flex-shrink: 0;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #63b3ed 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; font-weight: 700; color: #fff;
+    border: 4px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 40px rgba(66,153,225,0.3);
+  }
+  .hero-text h1 { font-size: 36px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .hero-text .subtitle { font-size: 16px; opacity: 0.9; margin-bottom: 4px; }
+  .hero-text .affiliation { font-size: 14px; opacity: 0.75; margin-bottom: 12px; }
+  .hero-contact { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-contact a {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #bee3f8; font-size: 14px; transition: var(--transition);
+  }
+  .hero-contact a:hover { color: #fff; }
+
+  @media (max-width: 768px) {
+    .hero-inner { flex-direction: column; text-align: center; }
+    .hero-avatar { width: 150px; height: 150px; font-size: 48px; }
+    .hero-text h1 { font-size: 28px; }
+    .hero-contact { justify-content: center; }
+  }
+
+  /* ===== Section ===== */
+  .section { padding: 50px 20px; }
+  .section:nth-child(even) { background: var(--bg-white); }
+  .section-inner { max-width: var(--max-width); margin: 0 auto; }
+
+  .section-title {
+    font-size: 22px; font-weight: 700; color: var(--primary);
+    margin-bottom: 28px; padding-bottom: 12px;
+    border-bottom: 3px solid var(--accent-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--primary); color: #fff; font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ===== About ===== */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+  }
+  .about-card {
+    background: var(--bg); border-radius: var(--radius); padding: 24px;
+    border: 1px solid var(--border); transition: var(--transition);
+  }
+  .about-card:hover { box-shadow: var(--shadow); }
+  .about-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Timeline ===== */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: 8px;
+    width: 2px; background: var(--accent-light);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 22px; padding-left: 24px;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute; left: -25px; top: 8px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-item .period {
+    font-size: 13px; color: var(--primary-lighter); font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .timeline-item .desc { font-size: 14px; color: var(--text-light); }
+
+  /* ===== Publications ===== */
+  .pub-list { list-style: none; }
+  .pub-list li {
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+    font-size: 14px; line-height: 1.6;
+  }
+  .pub-list li:last-child { border-bottom: none; }
+  .pub-list .pub-authors { color: var(--text); }
+  .pub-list .pub-authors strong { color: var(--primary); }
+  .pub-list .pub-year {
+    display: inline-block; background: var(--accent-light);
+    color: var(--primary); font-size: 12px; padding: 1px 8px;
+    border-radius: 3px; margin-right: 6px; font-weight: 600;
+  }
+  .pub-list .pub-journal { color: var(--text-muted); font-style: italic; }
+
+  /* ===== Cards ===== */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--bg); border-radius: var(--radius);
+    padding: 20px; border: 1px solid var(--border);
+    transition: var(--transition);
+  }
+  .card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+  .card h3 { font-size: 15px; color: var(--primary); margin-bottom: 8px; }
+  .card p, .card li { font-size: 14px; color: var(--text-light); }
+
+  /* ===== Tags ===== */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: var(--accent-light); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ===== Contact ===== */
+  .contact-box {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; padding: 36px; border-radius: var(--radius);
+    display: flex; align-items: center; gap: 32px;
+    flex-wrap: wrap;
+  }
+  .contact-box .email-big {
+    font-size: 22px; font-weight: 600; word-break: break-all;
+  }
+  .contact-box a { color: var(--accent-light); }
+  .contact-box a:hover { color: #fff; }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: var(--primary); color: rgba(255,255,255,0.7);
+    text-align: center; padding: 24px 20px; font-size: 13px;
+  }
+
+  /* ===== Highlight box ===== */
+  .highlight-box {
+    background: linear-gradient(135deg, #ebf8ff, #e6f0fa);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 20px;
+  }
+  .highlight-box h3 { color: var(--primary); margin-bottom: 8px; font-size: 16px; }
+  .highlight-box p { color: var(--text-light); font-size: 14px; }
+
+  /* ===== Misc ===== */
+  .badge {
+    display: inline-block; background: var(--primary); color: #fff;
+    font-size: 11px; padding: 2px 10px; border-radius: 3px;
+    margin-left: 4px; vertical-align: middle; font-weight: 500;
+  }
+  .mb-16 { margin-bottom: 16px; }
+  .mb-24 { margin-bottom: 24px; }
+  .text-muted { color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">胡静涵</a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#about">简介</a></li>
+      <li><a href="#research">研究领域</a></li>
+      <li><a href="#experience">经历</a></li>
+      <li><a href="#teaching">教学</a></li>
+      <li><a href="#publications">科研成果</a></li>
+      <li><a href="#projects">项目</a></li>
+      <li><a href="#contact">联系方式</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-avatar" aria-label="胡静涵照片占位">胡</div>
+    <div class="hero-text">
+      <h1>胡静涵</h1>
+      <p class="subtitle">讲师，师资博士后</p>
+      <p class="affiliation">华中师范大学心理学院</p>
+      <div class="hero-contact">
+        <a href="mailto:hujinghan@ccnu.edu.cn">✉ hujinghan@ccnu.edu.cn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">👤</span>个人简介</h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>基本信息</h3>
+        <p>姓名：胡静涵</p>
+        <p>职称：讲师，师资博士后</p>
+        <p>单位：华中师范大学心理学院</p>
+        <p>邮箱：<a href="mailto:hujinghan@ccnu.edu.cn">hujinghan@ccnu.edu.cn</a></p>
+      </div>
+      <div class="about-card">
+        <h3>研究方向</h3>
+        <p>采用混合研究方法考察亲子心理韧性对情绪的动态影响，及心理韧性的代际传递；开发面向亲子、家长及学生群体的心理韧性与情绪调节干预方案，通过随机对照试验评估干预效果、干预起效的边界条件及作用机制。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Research & Recruitment ===== -->
+<section class="section" id="research">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">🔬</span>研究领域</h2>
+    <div class="card-grid mb-24">
+      <div class="card">
+        <h3>亲子心理韧性与情绪</h3>
+        <p>采用混合研究方法（mixed methods），考察亲子心理韧性对情绪的动态影响过程，以及心理韧性在代际间的传递机制。</p>
+      </div>
+      <div class="card">
+        <h3>心理韧性与情绪调节干预</h3>
+        <p>开发面向亲子、家长及学生群体的心理韧性与情绪调节干预方案，通过随机对照试验（RCT）评估干预效果、干预起效的边界条件及作用机制。</p>
+      </div>
+      <div class="card">
+        <h3>数字化干预与AI应用</h3>
+        <p>结合大语言模型等前沿技术，探索青少年心理健康数字化干预的新路径及自适应匹配策略。</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h3>📢 招生信息</h3>
+      <p>招收<strong>2026级学术硕士及专业硕士</strong>，欢迎对亲子心理韧性、情绪调节干预、数字化心理健康等方向感兴趣的本科生及研究生邮件联系！<br>
+      联系邮箱：<a href="mailto:hujinghan@ccnu.edu.cn">hujinghan@ccnu.edu.cn</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Experience ===== -->
+<section class="section" id="experience">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">💼</span>工作经历</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">2024.07 – 至今</div>
+        <div class="desc">华中师范大学 · 讲师</div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 36px;"><span class="icon">🎓</span>受教育经历</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">2019.09 – 2024.07</div>
+        <div class="desc">香港城市大学 · 心理学 · 博士</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2016.09 – 2019.06</div>
+        <div class="desc">中国科学院心理研究所 · 应用心理学 · 硕士</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2014.03 – 2016.06</div>
+        <div class="desc">华中师范大学 · 心理学 · 学士（双学位）</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2012.09 – 2016.06</div>
+        <div class="desc">武汉大学 · 地理信息系统 · 学士</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Teaching ===== -->
+<section class="section" id="teaching">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">📖</span>教学工作</h2>
+    <div class="tags">
+      <span class="tag">心理咨询过程与实务</span>
+      <span class="tag">青少年团体辅导</span>
+      <span class="tag">团体心理治疗</span>
+      <span class="tag">心理咨询导论</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Publications ===== -->
+<section class="section" id="publications">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">📝</span>代表性期刊论文</h2>
+    <ol class="pub-list">
+      <li>
+        <span class="pub-year">2026</span>
+        <span class="pub-authors">Wang, H., <strong>Hu, J.</strong>*</span>
+        <span class="pub-journal">(2026). Online Self-Disclosure of Personal Information and Interpersonal Cybervictimization: A Meta-Analysis. <em>Trauma, Violence & Abuse</em>. Accepted.</span>
+      </li>
+      <li>
+        <span class="pub-year">2026</span>
+        <span class="pub-authors">Li, R., Jia, S., <strong>Hu, J.</strong>*, Ren, Z.*</span>
+        <span class="pub-journal">(2026). Resilience in the Covid-19 pandemic and beyond: A dynamic multilevel systemic resilience model. <em>Journal of Family Theory & Review, 18</em>(1), 130-147.</span>
+      </li>
+      <li>
+        <span class="pub-year">2025</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Qu, D., Liu, I., Yu, N.</span>
+        <span class="pub-journal">(2025). Interactive effects of individual and family resilience on anxiety in immigrant mother-child dyads in Hong Kong. <em>Journal of Family Psychology, 40</em>(2), 279-286.</span>
+      </li>
+      <li>
+        <span class="pub-year">2024</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Bu, H., Liu, I., & Yu, X.</span>
+        <span class="pub-journal">(2024). A randomized controlled trial of two parent-child parallel interventions... <em>Behavior Therapy, 55</em>(5), 1026-1042.</span>
+      </li>
+      <li>
+        <span class="pub-year">2023</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Bu, H., Liu, I. K. F., & Yu, N. X.</span>
+        <span class="pub-journal">(2023). A cluster randomized controlled trial... <em>Research on Social Work Practice, 34</em>(4), 372-383.</span>
+      </li>
+      <li>
+        <span class="pub-year">2022</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Liu, I., Stewart, S., Lam, T., & Yu, X.</span>
+        <span class="pub-journal">(2022). The more the better, only in the longer term... <em>Behavior Therapy, 53</em>(5), 944-957.</span>
+      </li>
+      <li>
+        <span class="pub-year">2022</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Zhang, X., Li, R., Zhang, J., & Zhang, W.</span>
+        <span class="pub-journal">(2022). A randomized controlled trial to evaluate the effect of metaphors... <em>Applied Research in Quality of Life, 18</em>, 849-867.</span>
+      </li>
+      <li>
+        <span class="pub-year">2021</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Zhou, Y., Zhang, X., et al.</span>
+        <span class="pub-journal">(2021). Abnormal glucose metabolism is associated with clinical symptoms... <em>Asian Journal of Psychiatry, 62</em>, 102716.</span>
+      </li>
+      <li>
+        <span class="pub-year">2018</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Zhang, W., Zhang, J., Yu, F., & Zhang, X.</span>
+        <span class="pub-journal">(2018). The brief intervention effect of metaphorical cognitive restructuring... <em>Applied Psychology Health and Well-Being, 10</em>(3), 414-433.</span>
+      </li>
+      <li>
+        <span class="pub-year">2025</span>
+        <span class="pub-authors">Guo, Y., Tong, J., Zhao, J., et al.</span>
+        <span class="pub-journal">(2025). Dare to Fly?... <em>Journal of Air Transport Management, 128</em>, 102858.</span>
+      </li>
+    </ol>
+
+    <h2 class="section-title" style="margin-top: 40px;"><span class="icon">🎤</span>会议论文</h2>
+    <ol class="pub-list">
+      <li>
+        <span class="pub-year">2025</span>
+        <span class="pub-authors">Tong, J., Li, S., Zhuang, Z., <strong>Hu, J.</strong>*, & Zou, Y.*</span>
+        <span class="pub-journal">EmoSync: Multi-Stage Reasoning with Multimodal Large Language Models... <em>Proceedings of MRAC</em>, 95-99.</span>
+      </li>
+      <li>
+        <span class="pub-year">2023</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Bu, H., Liu, I., & Yu, X.</span>
+        <span class="pub-journal">The effectiveness and mechanism... Oral presentation at <em>6th China International Conference on Positive Psychology</em>, July 2023.</span>
+      </li>
+      <li>
+        <span class="pub-year">2021</span>
+        <span class="pub-authors"><strong>Hu, J.</strong>, Liu, I., Stewart, S., Lam, T., & Yu, X.</span>
+        <span class="pub-journal">Evaluation of a Positive Compound Intervention... Oral presentation at <em>32nd ICP, Prague</em>, July 2021.</span>
+      </li>
+      <li>
+        <span class="pub-year">2017</span>
+        <span class="pub-authors"><strong>Hu, J.</strong></span>
+        <span class="pub-journal">The Effectiveness of Metaphorical Cognitive Restructuring... Oral presentation at <em>5th Chinese Academic Conference on CBT</em>, October 2017.</span>
+      </li>
+    </ol>
+
+    <h2 class="section-title" style="margin-top: 40px;"><span class="icon">📋</span>社会工作（期刊审稿人）</h2>
+    <div class="tags">
+      <span class="tag">Journal of Medical Internet Research</span>
+      <span class="tag">JMIR Human Factors</span>
+      <span class="tag">JMIR Serious Games</span>
+      <span class="tag">Frontiers in Psychiatry</span>
+      <span class="tag">International Journal of Mental Health and Addiction</span>
+      <span class="tag">Family Process</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Projects ===== -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">🔬</span>主持项目</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>海外高层次人才引进计划</h3>
+        <p class="text-muted">入选</p>
+      </div>
+      <div class="card">
+        <h3>2025年度国家资助博士后研究人员计划C档</h3>
+        <p class="text-muted">获选资助</p>
+      </div>
+      <div class="card">
+        <h3>第77批博后面上项目</h3>
+        <p>《基于大模型的抑郁青少年与父母互动模式识别及干预研究》</p>
+        <p class="text-muted">2025 – 2027</p>
+      </div>
+      <div class="card">
+        <h3>华中师范大学优秀种子培育项目</h3>
+        <p>《韧性的代际互惠对抑郁青少年和家长情绪的影响及数字化干预研究》</p>
+        <p class="text-muted">2025.04 – 2028.04</p>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 36px;"><span class="icon">🤝</span>参与项目</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>国家重点研发计划</h3>
+        <p>"青少年心理健康促进关键技术研究与应用示范"<br>子课题：青少年心理健康数字化干预及自适应匹配研究</p>
+        <p class="text-muted">2024.12 – 2027.12</p>
+      </div>
+      <div class="card">
+        <h3>国家社会科学基金项目</h3>
+        <p>《青少年短视频沉迷的动机-行为转化过程与社会工作干预研究》</p>
+        <p class="text-muted">2024.08 – 2027.06</p>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 36px;"><span class="icon">📜</span>培训交流</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">2025.03 – 2025.07</div>
+        <div class="desc">系统式家庭治疗连续培训</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2024.10</div>
+        <div class="desc">心理咨询与治疗专业理论</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2021.01 – 2023.12</div>
+        <div class="desc">认知行为疗法3年培训项目</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2021.06</div>
+        <div class="desc">香港城市大学精神健康急救课程</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2020.05 – 2020.08</div>
+        <div class="desc">问题管理+21天训练营</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2017.10</div>
+        <div class="desc">抑郁焦虑障碍团体认知行为疗法培训</div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2015</div>
+        <div class="desc">国家三级心理咨询师资格证书</div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 36px;"><span class="icon">🏆</span>荣誉奖励</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>研究学位学生杰出学术表现奖</h3>
+        <p class="text-muted">香港城市大学 · 2021 – 2023</p>
+      </div>
+      <div class="card">
+        <h3>优秀口头报告</h3>
+        <p class="text-muted">第六届中国国际积极心理学大会 · 2023.07</p>
+      </div>
+      <div class="card">
+        <h3>社会与行为科学院学费奖学金</h3>
+        <p class="text-muted">香港城市大学 · 2021 – 2022</p>
+      </div>
+      <div class="card">
+        <h3>博士入学学费奖学金</h3>
+        <p class="text-muted">香港城市大学 · 2019 – 2020</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <h2 class="section-title"><span class="icon">📬</span>联系方式</h2>
+    <div class="contact-box">
+      <div style="flex-shrink:0; width:60px; height:60px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:28px;">✉</div>
+      <div>
+        <p style="font-size:14px; opacity:0.8; margin-bottom:4px;">电子邮箱</p>
+        <p class="email-big"><a href="mailto:hujinghan@ccnu.edu.cn" style="color:#bee3f8; text-decoration:underline;">hujinghan@ccnu.edu.cn</a></p>
+        <p style="margin-top: 8px; font-size: 14px; opacity: 0.75;">华中师范大学心理学院</p>
+        <p style="font-size: 14px; opacity: 0.75;">欢迎感兴趣的本科生及研究生邮件联系！</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p>&copy; 2025 胡静涵 · 华中师范大学心理学院 · <a href="mailto:hujinghan@ccnu.edu.cn" style="color:rgba(255,255,255,0.9);">hujinghan@ccnu.edu.cn</a></p>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+  // Close nav on link click (mobile)
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
